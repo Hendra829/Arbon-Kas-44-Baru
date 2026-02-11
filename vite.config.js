@@ -17,7 +17,8 @@ export default defineConfig({
       },
       output: {
         manualChunks: {
-          'vendor': ['chart.js', 'papaparse', 'jspdf', 'pptxgenjs'],
+          'charts': ['chart.js'],
+          'docs': ['papaparse', 'jspdf', 'pptxgenjs'],
           'bootstrap': ['bootstrap']
         }
       }
