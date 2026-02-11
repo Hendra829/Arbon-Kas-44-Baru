@@ -10,7 +10,7 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     sourcemap: true,
-    minify: 'terser',
+    minify: 'esbuild',
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html')
@@ -21,12 +21,6 @@ export default defineConfig({
           'docs': ['papaparse', 'jspdf', 'pptxgenjs'],
           'bootstrap': ['bootstrap']
         }
-      }
-    },
-    terserOptions: {
-      compress: {
-        drop_console: ['log'],
-        drop_debugger: true
       }
     },
     chunkSizeWarningLimit: 1000
