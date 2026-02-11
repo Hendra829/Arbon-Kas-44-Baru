@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="AR'BON - Sistem Manajemen Keuangan Perusahaan Suku Cadang Carbon">
+    <meta name="author" content="AR'BON">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://accounts.google.com https://www.gstatic.com https://cdn.jsdelivr.net; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://accounts.google.com https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https:; font-src 'self' https://cdn.jsdelivr.net data:;">
+    <title>AR'BON - Sistem Keuangan</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+</head>
+<body>
+    <!-- Authentication Page -->
+    <div id="auth-page" class="page active">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h1 class="brand-title">AR'BON</h1>
+                    <p class="brand-subtitle">Sistem Manajemen Keuangan</p>
+                    <p class="brand-description">Perusahaan Suku Cadang Carbon</p>
+                </div>
+                
+                <div class="auth-tabs">
+                    <button class="auth-tab active" data-tab="login">Masuk</button>
+                    <button class="auth-tab" data-tab="register">Daftar</button>
+                </div>
+                
+                <div class="auth-content">
+                    <!-- Login Form -->
+                    <div id="login-form" class="auth-form active">
+                        <div class="google-auth">
+                            <button id="google-login" class="btn-google">
+                                <i class="bi bi-google"></i> Masuk dengan Google
+                            </button>
+                        </div>
+                        
+                        <div class="divider">
+                            <span>atau</span>
+                        </div>
+                        
+                        <form id="email-login-form">
+                            <div class="form-group">
+                                <label for="login-email">Email</label>
+                                <input type="email" id="login-email" required placeholder="email@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Password</label>
+                                <input type="password" id="login-password" required placeholder="Password">
+                            </div>
+                            <button type="submit" class="btn-primary">Masuk</button>
+                        </form>
+                    </div>
+                    
+                    <!-- Register Form -->
+                    <div id="register-form" class="auth-form">
+                        <div class="google-auth">
+                            <button id="google-register" class="btn-google">
+                                <i class="bi bi-google"></i> Daftar dengan Google
+                            </button>
+                        </div>
+                        
+                        <div class="divider">
+                            <span>atau</span>
+                        </div>
+                        
+                        <form id="email-register-form">
+                            <div class="form-group">
+                                <label for="register-name">Nama Lengkap</label>
+                                <input type="text" id="register-name" required placeholder="Nama Lengkap">
+                            </div>
+                            <div class="form-group">
+                                <label for="register-email">Email</label>
+                                <input type="email" id="register-email" required placeholder="email@example.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="register-password">Password</label>
+                                <input type="password" id="register-password" required placeholder="Password (min 8 karakter)">
+                            </div>
+                            <button type="submit" class="btn-primary">Daftar</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="auth-footer">
+                    <p>&copy; 2024 AR'BON. All Rights Reserved.</p>
+                    <p class="security-info"><i class="bi bi-shield-check"></i> Dilindungi dengan enkripsi tingkat tinggi</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="main-app" class="page">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <h2>AR'BON</h2>
+                <span>Sistem Keuangan</span>
+            </div>
+            <ul class="navbar-menu">
+                <li><a href="#" data-page="beranda" class="nav-link active"><i class="bi bi-house"></i> Beranda</a></li>
+                <li><a href="#" data-page="laporan" class="nav-link"><i class="bi bi-file-text"></i> Laporan</a></li>
+            </ul>
+            <div class="navbar-user">
+                <span id="user-name">User</span>
+                <button id="logout-btn" class="btn-logout"><i class="bi bi-box-arrow-right"></i> Keluar</button>
+            </div>
+        </nav>
+
+        <!-- Beranda Page -->
+        <div id="beranda-page" class="content-page active">
+            <div class="container-fluid">
+                <h1 class="page-title">Dashboard Keuangan</h1>
+                
+                <!-- Summary Cards -->
+                <div class="row summary-cards">
+                    <div class="col-md-3">
+                        <div class="summary-card income">
+                            <i class="bi bi-arrow-up-circle"></i>
+                            <div class="card-content">
+                                <h3>Total Pemasukan</h3>
+                                <p class="amount" id="total-income">Rp 0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="summary-card expense">
+                            <i class="bi bi-arrow-down-circle"></i>
+                            <div class="card-content">
+                                <h3>Total Pengeluaran</h3>
+                                <p class="amount" id="total-expense">Rp 0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="summary-card balance">
+                            <i class="bi bi-wallet2"></i>
+                            <div class="card-content">
+                                <h3>Saldo</h3>
+                                <p class="amount" id="balance">Rp 0</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="summary-card transactions">
+                            <i class="bi bi-receipt"></i>
+                            <div class="card-content">
+                                <h3>Total Transaksi</h3>
+                                <p class="amount" id="total-transactions">0</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Charts Section -->
+                <div class="row charts-section">
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <h3>Grafik Pemasukan vs Pengeluaran</h3>
+                            <canvas id="income-expense-chart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-card">
+                            <h3>Distribusi Pengeluaran</h3>
+                            <canvas id="expense-distribution-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Transactions Table -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="table-card">
+                            <div class="table-header">
+                                <h3>Transaksi Terbaru</h3>
+                                <button class="btn-refresh" id="refresh-beranda"><i class="bi bi-arrow-clockwise"></i> Refresh</button>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="data-table" id="recent-transactions-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Tanggal</th>
+                                            <th>Nama</th>
+                                            <th>Deskripsi</th>
+                                            <th>Kategori</th>
+                                            <th>Tipe</th>
+                                            <th>Jumlah</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="recent-transactions-body">
+                                        <tr class="no-data">
+                                            <td colspan="6">Belum ada transaksi</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Laporan Page -->
+        <div id="laporan-page" class="content-page">
+            <div class="container-fluid">
+                <h1 class="page-title">Manajemen Laporan</h1>
+                
+                <!-- Action Buttons -->
+                <div class="action-bar">
+                    <button class="btn-action" id="add-transaction-btn"><i class="bi bi-plus-circle"></i> Tambah Transaksi</button>
+                    <button class="btn-action" id="import-data-btn"><i class="bi bi-upload"></i> Import Data</button>
+                    <button class="btn-action" id="export-data-btn"><i class="bi bi-download"></i> Export Data</button>
+                </div>
+
+                <!-- Category Tabs -->
+                <div class="category-tabs">
+                    <button class="category-tab active" data-category="all">Semua Transaksi</button>
+                    <button class="category-tab" data-category="gaji">Gaji Pekerja</button>
+                    <button class="category-tab" data-category="makan">Uang Makan</button>
+                    <button class="category-tab" data-category="listrik">Listrik</button>
+                    <button class="category-tab" data-category="produksi">Belanja Produksi</button>
+                </div>
+
+                <!-- Summary Section -->
+                <div class="row summary-section">
+                    <div class="col-md-6">
+                        <div class="summary-box">
+                            <h4>Total Pemasukan</h4>
+                            <p class="summary-amount income" id="laporan-total-income">Rp 0</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="summary-box">
+                            <h4>Total Pengeluaran</h4>
+                            <p class="summary-amount expense" id="laporan-total-expense">Rp 0</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div class="table-card">
+                    <div class="table-header">
+                        <h3>Daftar Transaksi</h3>
+                        <div class="table-controls">
+                            <input type="text" id="search-transaction" placeholder="Cari transaksi...">
+                            <select id="filter-type">
+                                <option value="all">Semua Tipe</option>
+                                <option value="income">Pemasukan</option>
+                                <option value="expense">Pengeluaran</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table" id="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Tanggal</th>
+                                    <th>Nama</th>
+                                    <th>Deskripsi</th>
+                                    <th>Kategori</th>
+                                    <th>Tipe</th>
+                                    <th>Jumlah</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactions-body">
+                                <tr class="no-data">
+                                    <td colspan="7">Belum ada transaksi</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Transaction Modal -->
+    <div id="transaction-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Tambah Transaksi</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="transaction-form">
+                    <div class="form-group">
+                        <label for="trans-date">Tanggal</label>
+                        <input type="date" id="trans-date" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="trans-name">Nama</label>
+                        <input type="text" id="trans-name" required placeholder="Nama transaksi">
+                    </div>
+                    <div class="form-group">
+                        <label for="trans-description">Deskripsi/Keterangan</label>
+                        <textarea id="trans-description" rows="3" placeholder="Deskripsi detail transaksi"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="trans-category">Kategori</label>
+                        <select id="trans-category" required>
+                            <option value="">Pilih Kategori</option>
+                            <option value="gaji">Gaji Pekerja</option>
+                            <option value="makan">Uang Makan</option>
+                            <option value="listrik">Listrik</option>
+                            <option value="produksi">Belanja Produksi</option>
+                            <option value="other">Lainnya</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="trans-type">Tipe</label>
+                        <select id="trans-type" required>
+                            <option value="">Pilih Tipe</option>
+                            <option value="income">Pemasukan</option>
+                            <option value="expense">Pengeluaran</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="trans-amount">Nominal (Rp)</label>
+                        <input type="number" id="trans-amount" required placeholder="0" min="0">
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn-secondary modal-cancel">Batal</button>
+                        <button type="submit" class="btn-primary">Simpan</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Modal -->
+    <div id="import-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Import Data</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="import-options">
+                    <button class="import-option" data-type="csv">
+                        <i class="bi bi-filetype-csv"></i>
+                        <span>CSV</span>
+                    </button>
+                    <button class="import-option" data-type="pdf">
+                        <i class="bi bi-filetype-pdf"></i>
+                        <span>PDF</span>
+                    </button>
+                    <button class="import-option" data-type="docx">
+                        <i class="bi bi-filetype-docx"></i>
+                        <span>Word</span>
+                    </button>
+                    <button class="import-option" data-type="pptx">
+                        <i class="bi bi-filetype-pptx"></i>
+                        <span>PowerPoint</span>
+                    </button>
+                </div>
+                <input type="file" id="file-import-input" accept=".csv,.pdf,.doc,.docx,.ppt,.pptx" style="display: none;">
+                <div id="import-preview" class="import-preview"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Modal -->
+    <div id="export-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Export Data</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Pilih format export:</p>
+                <div class="export-options">
+                    <button class="export-option" data-type="csv">
+                        <i class="bi bi-filetype-csv"></i>
+                        <span>CSV</span>
+                    </button>
+                    <button class="export-option" data-type="pdf">
+                        <i class="bi bi-filetype-pdf"></i>
+                        <span>PDF</span>
+                    </button>
+                    <button class="export-option" data-type="docx">
+                        <i class="bi bi-filetype-docx"></i>
+                        <span>Word</span>
+                    </button>
+                    <button class="export-option" data-type="pptx">
+                        <i class="bi bi-filetype-pptx"></i>
+                        <span>PowerPoint</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.6.0/dist/jspdf.plugin.autotable.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docx@8.2.2/build/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
