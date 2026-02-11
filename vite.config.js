@@ -9,7 +9,7 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
-    sourcemap: false,
+    sourcemap: true,
     minify: 'terser',
     rollupOptions: {
       input: {
@@ -25,7 +25,7 @@ export default defineConfig({
     },
     terserOptions: {
       compress: {
-        drop_console: true,
+        drop_console: ['log'],
         drop_debugger: true
       }
     },
